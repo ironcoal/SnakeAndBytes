@@ -16,11 +16,12 @@ public class Snake implements Iterable<Point> {
         body.add(new Point(0, 1));
         body.add(new Point(0, 2));
 
-        direction = new Point(0, 1);
+        direction = Configuration.DOWN;
         length = 5;
     }
 
     public boolean move() {
+        game_area.updateDirection();
         Point next_field = this.getHead().add(direction);
         /* Wenn sich neuer Punkt im Spielfeld befindet,
         *  fuege den Punkt der Schlange hinzu und ueberpruefe

@@ -12,6 +12,7 @@ public class GameArea extends JPanel implements KeyListener {
     private Snake snake;
     private Bytes bytes;
     private SnakeMoveThread move_thread;
+    private Point last_direction = Configuration.DOWN;
 
     public GameArea() {
 
@@ -54,17 +55,21 @@ public class GameArea extends JPanel implements KeyListener {
     
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_UP) {
-            snake.setDirection(new Point(0, -1));
+            last_direction = Configuration.UP;
         }
         if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            snake.setDirection(new Point(0, 1));
+            last_direction = Configuration.DOWN;
         }
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            snake.setDirection(new Point(-1, 0));
+            last_direction = Configuration.LEFT;
         }
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            snake.setDirection(new Point(1, 0));
+            last_direction = Configuration.RIGHT;
         }  
+    }
+
+    public void updateDirection() {
+        snake.setDirection(last_direction);
     }
 
     public boolean isIn(Point point) {
