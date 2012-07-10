@@ -7,7 +7,7 @@ public class Bytes implements Iterable<Point> {
     private GameArea game_area;
     private Snake snake;
     private Walls walls;
-
+    
     public Bytes(GameArea game_area, Snake snake, Walls walls) {
         this.game_area = game_area;
         this.snake = snake;
