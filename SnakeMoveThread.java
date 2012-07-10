@@ -11,17 +11,18 @@ public class SnakeMoveThread extends Thread {
         stop = false;
         start();
     }
+
     public void run() {
         while (!stop) {
             try {
-                sleep(100);
+                sleep(Configuration.SPEED);
             }
             catch (Exception e) {
                 System.out.println("Sleep nicht moeglich");
             }
             if (!snake.move()) {
-                System.out.println("Game Over");
                 stop = true;
+                game_area.gameOver();
             }
             game_area.validate();
             game_area.repaint();

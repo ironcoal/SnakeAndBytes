@@ -1,15 +1,15 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class Snake {
+public class Snake implements Iterable<Point> {
 
     private int length;
-    ArrayList<Point> body;
+    ArrayList<Point> body = new ArrayList<Point>();
     private Point direction;
     GameArea game_area;
     Bytes bytes;
 
     public Snake(GameArea game_area) {
-        body = new ArrayList<Point>();
         this.game_area = game_area;
 
         body.add(new Point(0, 0));
@@ -19,6 +19,7 @@ public class Snake {
         direction = new Point(0, 1);
         length = 5;
     }
+
     public boolean move() {
         Point next_field = this.getHead().add(direction);
         /* Wenn sich neuer Punkt im Spielfeld befindet,
@@ -40,27 +41,36 @@ public class Snake {
             return false;
         }
     }
+
     public boolean isPossible(Point point) {
         /* Befindet sich der uebergebene Punkt ausserhalb
         *  des Spielfelds oder auf dem snake-body? */
         return (game_area.isIn(point) && !body.contains(point));
     }
+
     public void setDirection(Point new_direction) {
         if (direction.add(new_direction).equals(new Point(0,0)))
             System.out.println("Richtungsaenderung nicht moeglich!");
         else
             direction = new_direction;
     }
+
     public Point getHead() {
         return body.get(body.size() - 1);
     }
+
     public void grow() {
         length++;
     }
-    public ArrayList<Point> getBody() {
-        return body;
-    }
+
     public void setBytes(Bytes bytes) {
         this.bytes = bytes;
+    }
+
+    public boolean containsBody(Point b) {
+        return body.contains(b);
+    }
+    public Iterator<Point> iterator() {
+        return body.iterator();
     }
 }

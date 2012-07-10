@@ -1,41 +1,45 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class Bytes {
-    ArrayList<Point> bytes;
+public class Bytes implements Iterable<Point> {
 
-    GameArea game_area;
-    Snake snake;
-    private static Bytes unique = null;
+    private ArrayList<Point> ar_bytes = new ArrayList<Point>();
+    private GameArea game_area;
+    private Snake snake;
 
     public Bytes(GameArea game_area, Snake snake) {
         this.game_area = game_area;
         this.snake = snake;
-
-        bytes = new ArrayList<Point>();
-        int number = (int) (game_area.getBoardHeight() * game_area.getBoardWidth() * 0.002);
+        
+        int number = (int) (game_area.getBoardHeight() * game_area.getBoardWidth() * Configuration.BYTES_NUMBER);
+        
         for (int i = 0; i < number; i++)
             addByte();
-        bytes.add(new Point(3,3));
     }
-    public ArrayList<Point> getBytes() {
-        return bytes;
-    } 
+
     public void addByte() {
-        bytes.add(randByte());
+        ar_bytes.add(randByte());
     }
+
     public void removeByte(Point b) {
-        bytes.remove(b);
+        ar_bytes.remove(b);
     }
+
     public boolean containsByte(Point b) {
-        return bytes.contains(b);
+        return ar_bytes.contains(b);
     }
 
     private Point randByte() {
         Point rp;
+        /* Get random Point in GameArea and return, if it's not on snake-body */
         do {
             rp = new Point((int) (Math.random() * (game_area.getBoardWidth() - 1)), 
                 (int) (Math.random() * (game_area.getBoardHeight() - 1)));
-        } while (snake.getBody().contains(rp));
+        } while (snake.containsBody(rp));
         return rp;
+    }
+
+    public Iterator<Point> iterator() {
+        return ar_bytes.iterator();
     }
 }
