@@ -1,7 +1,7 @@
-import java.util.HashSet;
+import java.util.ArrayList;
 
 public class Bytes {
-    HashSet<Point> bytes;
+    ArrayList<Point> bytes;
 
     GameArea game_area;
     Snake snake;
@@ -11,12 +11,13 @@ public class Bytes {
         this.game_area = game_area;
         this.snake = snake;
 
-        bytes = new HashSet<Point>();
+        bytes = new ArrayList<Point>();
         int number = (int) (game_area.getBoardHeight() * game_area.getBoardWidth() * 0.002);
         for (int i = 0; i < number; i++)
             addByte();
+        bytes.add(new Point(3,3));
     }
-    public HashSet<Point> getBytes() {
+    public ArrayList<Point> getBytes() {
         return bytes;
     } 
     public void addByte() {
@@ -26,7 +27,6 @@ public class Bytes {
         bytes.remove(b);
     }
     public boolean containsByte(Point b) {
-        System.out.println(bytes.contains(b) + ": " + b);
         return bytes.contains(b);
     }
 
@@ -36,7 +36,6 @@ public class Bytes {
             rp = new Point((int) (Math.random() * (game_area.getBoardWidth() - 1)), 
                 (int) (Math.random() * (game_area.getBoardHeight() - 1)));
         } while (snake.getBody().contains(rp));
-        System.out.println("Randbyte: " + rp);
         return rp;
-    }   
+    }
 }

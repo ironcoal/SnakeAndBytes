@@ -17,6 +17,7 @@ public class Point {
     public Point add(Point point) {
         return new Point(this.x + point.getX(), this.y + point.getY());
     }
+    @Override
     public boolean equals(Object o) {
         return this.x == ((Point) o).getX() && this.y == ((Point) o).getY();
     }
