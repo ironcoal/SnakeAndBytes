@@ -4,37 +4,42 @@ import java.util.Iterator;
 public class Snake implements Iterable<Point> {
 
     private int length;
-    ArrayList<Point> body = new ArrayList<Point>();
+    private ArrayList<Point> body = new ArrayList<Point>();
     private Point direction;
-    GameArea game_area;
-    Bytes bytes;
+    private GameArea game_area;
+    private Bytes bytes;
+    private Walls walls;
 
-    public Snake(GameArea game_area) {
+    public Snake(GameArea game_area, Walls walls) {
         this.game_area = game_area;
+        this.walls = walls;
 
-        body.add(new Point(0, 0));
-        body.add(new Point(0, 1));
-        body.add(new Point(0, 2));
+        body.add(new Point(5, 5));
 
         direction = Configuration.DOWN;
-        length = 5;
+        length = Configuration.SNAKE_DEFAULT_LENGTH;
     }
 
     public boolean move() {
         game_area.updateDirection();
-        Point next_field = this.getHead().add(direction);
+        Point next_field = getHead().add(direction);
         /* Wenn sich neuer Punkt im Spielfeld befindet,
-        *  fuege den Punkt der Schlange hinzu und ueberpruefe
-        *  anschliessend, ob Schlange zu lang ist. Wenn ja, loesche
-        *  letzten Punkt */
+         * fuege den Punkt der Schlange hinzu und ueberpruefe
+         * anschliessend, ob Schlange zu lang ist. Wenn ja, loesche
+         * letzten Punkt */
         if (isPossible(next_field)) {
             if (bytes.containsByte(next_field)) {
                 grow();
                 bytes.removeByte(next_field);
+                body.add(next_field);
                 bytes.addByte();
+            } else {
+                body.add(next_field);
             }
-            body.add(next_field);
-            if (body.size() > length)
+            /* "while", damit spaeter die Schlange mal mehr als 
+             * ein Feld schrumpfen kann 
+             */
+            while (body.size() > length)
                 body.remove(0);
             return true;
         } else {
@@ -46,7 +51,7 @@ public class Snake implements Iterable<Point> {
     public boolean isPossible(Point point) {
         /* Befindet sich der uebergebene Punkt ausserhalb
         *  des Spielfelds oder auf dem snake-body? */
-        return (game_area.isIn(point) && !body.contains(point));
+        return (game_area.isIn(point) && !body.contains(point) && !walls.containsWall(point));
     }
 
     public void setDirection(Point new_direction) {

@@ -1,4 +1,4 @@
-import java.awt.*;
+import java.util.ArrayList;
 
 public class Point {
 
@@ -19,6 +19,29 @@ public class Point {
 
     public Point add(Point point) {
         return new Point(this.x + point.getX(), this.y + point.getY());
+    }
+
+    public Point substract(Point point) {
+        return new Point(this.x - point.getX(), this.y - point.getY());
+    }
+
+    public ArrayList<Point> lineTo(Point to) {
+        Point difference = to.substract(this);
+        ArrayList<Point> ar_line = new ArrayList<Point>();
+        
+        if (difference.getX() != 0 && difference.getY() != 0) {
+            System.out.println("Only straight walls allowed!");
+            return null;
+        } else if (difference.getX() != 0) {
+            for (int i = 0; i <= difference.getX(); i++)
+                ar_line.add(new Point(getX() + i, getY()));
+        } else if (difference.getY() != 0) {
+            for (int i = 0; i <= difference.getY(); i++)
+                ar_line.add(new Point(getX(), getY() + i));
+        } else {
+            ar_line.add(this);
+        }
+        return ar_line;
     }
 
     @Override

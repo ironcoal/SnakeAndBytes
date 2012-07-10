@@ -11,14 +11,17 @@ public class GameArea extends JPanel implements KeyListener {
 
     private Snake snake;
     private Bytes bytes;
+    private Walls walls;
     private SnakeMoveThread move_thread;
-    private Point last_direction = Configuration.DOWN;
+    private Point last_direction;
 
     public GameArea() {
 
         setPreferredSize(new Dimension(width * scale, height * scale));
         setBackground(Configuration.COLOR_BACKGROUND);
         setDoubleBuffered(true);
+        
+        walls = new Walls();
 
         this.addKeyListener(this);
         setVisible(true);
@@ -28,6 +31,7 @@ public class GameArea extends JPanel implements KeyListener {
     
     public void paint(Graphics g) {
         super.paint(g);
+        paintWalls(g);
         paintSnake(g);
         paintBytes(g);
     }
@@ -40,13 +44,20 @@ public class GameArea extends JPanel implements KeyListener {
     }
 
     public void paintSnake(Graphics g) {
+        g.setColor(Configuration.COLOR_SNAKE_BODY);
         for (Point p: snake) {
-                g.setColor(Configuration.COLOR_SNAKE_BODY);
                 g.fillRect(scale * p.getX(), scale * p.getY(), scale, scale);
         }
         g.setColor(Configuration.COLOR_SNAKE_HEAD);
         Point p = snake.getHead();
         g.fillRect(scale * p.getX(), scale * p.getY(), scale, scale);
+    }
+
+    public void paintWalls(Graphics g) {
+        g.setColor(Configuration.COLOR_WALLS);
+        for (Point p: walls) {
+                g.fillRect(scale * p.getX(), scale * p.getY(), scale, scale);
+        }
     }
 
     public void keyTyped(KeyEvent e) {}
@@ -88,9 +99,10 @@ public class GameArea extends JPanel implements KeyListener {
     }
 
     public void newGame() {
-        snake = new Snake(this);
-        bytes = new Bytes(this, snake);
+        snake = new Snake(this, walls);
+        bytes = new Bytes(this, snake, walls);
         snake.setBytes(bytes);
+        last_direction = Configuration.DOWN;
         move_thread = new SnakeMoveThread(this, snake);        
     }
 
