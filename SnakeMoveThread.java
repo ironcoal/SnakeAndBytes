@@ -19,7 +19,7 @@ public class SnakeMoveThread extends Thread {
             catch (Exception e) {
                 System.out.println("Sleep nicht moeglich");
             }
-            if (!snake.move(game_area)) {
+            if (!snake.move()) {
                 System.out.println("Game Over");
                 stop = true;
             }

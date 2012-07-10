@@ -5,10 +5,13 @@ public class Snake {
     private int length;
     ArrayList<Point> body;
     private Point direction;
+    GameArea game_area;
+    Bytes bytes;
 
-    public Snake() {
+    public Snake(GameArea game_area) {
         body = new ArrayList<Point>();
-        
+        this.game_area = game_area;
+
         body.add(new Point(0, 0));
         body.add(new Point(0, 1));
         body.add(new Point(0, 2));
@@ -16,13 +19,18 @@ public class Snake {
         direction = new Point(0, 1);
         length = 5;
     }
-    public boolean move(GameArea game_area) {
+    public boolean move() {
         Point next_field = this.getHead().add(direction);
         /* Wenn sich neuer Punkt im Spielfeld befindet,
         *  fuege den Punkt der Schlange hinzu und ueberpruefe
         *  anschliessend, ob Schlange zu lang ist. Wenn ja, loesche
         *  letzten Punkt */
-        if (isPossible(next_field, game_area)) {
+        if (isPossible(next_field)) {
+            if (bytes.containsByte(next_field)) {
+                grow();
+                bytes.removeByte(next_field);
+                bytes.addByte();
+            }
             body.add(next_field);
             if (body.size() > length)
                 body.remove(0);
@@ -32,7 +40,7 @@ public class Snake {
             return false;
         }
     }
-    public boolean isPossible(Point point, GameArea game_area) {
+    public boolean isPossible(Point point) {
         /* Befindet sich der uebergebene Punkt ausserhalb
         *  des Spielfelds oder auf dem snake-body? */
         return (game_area.isIn(point) && !body.contains(point));
@@ -46,10 +54,13 @@ public class Snake {
     public Point getHead() {
         return body.get(body.size() - 1);
     }
-    public void changeLength(int change) {
-        length += change;
+    public void grow() {
+        length++;
     }
     public ArrayList<Point> getBody() {
         return body;
+    }
+    public void setBytes(Bytes bytes) {
+        this.bytes = bytes;
     }
 }

@@ -7,13 +7,16 @@ public class GameArea extends JPanel implements KeyListener {
     
     private int height, width, scale;    
     private Snake snake;
+    private Bytes bytes;
 
     public GameArea() {
         height = 20; 
-        width = 80;
-        scale = 15;
+        width = 50;
+        scale = 20;
 
-        snake = new Snake();
+        snake = new Snake(this);
+        bytes = new Bytes(this, snake);
+        snake.setBytes(bytes);
 
         setPreferredSize(new Dimension(width * scale, height * scale));
         setBackground(new Color(20, 20, 20));
@@ -27,6 +30,15 @@ public class GameArea extends JPanel implements KeyListener {
     public void paint(Graphics g) {
         super.paint(g);
         paintSnake(g);
+        paintBytes(g);
+    }
+
+    public void paintBytes(Graphics g) {
+        g.setColor(new Color(100, 100, 100));
+        for (Point p: bytes.getBytes()) {
+            g.fillRect(scale * p.getX(), scale * p.getY(), scale, scale);
+            //g.drawString("1", p.getX() * scale, p.getY() * scale);
+        }
     }
 
     public void paintSnake(Graphics g) {
