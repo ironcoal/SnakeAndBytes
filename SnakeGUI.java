@@ -1,39 +1,25 @@
-import java.awt.*;
+import javax.swing.*;
 import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 
-public class SnakeGUI extends Frame implements ActionListener {
+public class SnakeGUI extends JFrame implements ActionListener {
         
-    private Button b_new;
-    private int  board_size_height = 50, 
-        board_size_width = 80, 
-        scale = 10;
+    //private JButton b_new;
     private GameArea game_area;
-
 
     public SnakeGUI() {
         super("Snake & Bytes");
         
-        game_area = new GameArea(board_size_height, board_size_width, scale);
-        game_area.setSize(board_size_width * scale, board_size_height * scale);
+        game_area = new GameArea();
 
-        setLayout(new BorderLayout());
-        add(game_area, BorderLayout.CENTER);
+        add(game_area);
 
-        b_new = new Button("Neues Spiel");
-        add(b_new, BorderLayout.SOUTH);
-
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                dispose();
-                System.exit(0);
-            }
-        });
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         pack();
         setVisible(true);
         game_area.requestFocus();
     }
 
-    public void actionPerformed(ActionEvent e) {
-
-    }
+    public void actionPerformed(ActionEvent e) {}
 }

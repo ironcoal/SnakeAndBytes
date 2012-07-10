@@ -14,12 +14,16 @@ public class SnakeMoveThread extends Thread {
     public void run() {
         while (!stop) {
             try {
-                sleep(500);
+                sleep(100);
             }
             catch (Exception e) {
                 System.out.println("Sleep nicht moeglich");
             }
-            stop = !snake.move(game_area);
+            if (!snake.move(game_area)) {
+                System.out.println("Game Over");
+                stop = true;
+            }
+            game_area.validate();
             game_area.repaint();
         }
     }

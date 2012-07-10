@@ -5,19 +5,16 @@ public class Snake {
     private int length;
     ArrayList<Point> body;
     private Point direction;
-    public Point head;
-    public Point tail;
 
     public Snake() {
         body = new ArrayList<Point>();
-        head = new Point(0, 2);
-        tail = new Point(0, 0);
-        body.add(tail);
+        
+        body.add(new Point(0, 0));
         body.add(new Point(0, 1));
-        body.add(head);
+        body.add(new Point(0, 2));
 
         direction = new Point(0, 1);
-        length = 10;
+        length = 5;
     }
     public boolean move(GameArea game_area) {
         Point next_field = this.getHead().add(direction);
@@ -29,9 +26,6 @@ public class Snake {
             body.add(next_field);
             if (body.size() > length)
                 body.remove(0);
-            for (Point p: body)
-                System.out.print(p + " ");
-            System.out.println();
             return true;
         } else {
             /* Game Over */
