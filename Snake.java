@@ -69,7 +69,7 @@ public class Snake extends Observable implements Iterable<Point> {
     public void changeLength(int type) {
         length += type;
         setChanged();
-        notifyObservers();
+        notifyObservers(length);
     }
 
     public void setBytes(Bytes bytes) {
