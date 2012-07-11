@@ -37,7 +37,14 @@ public class GameArea extends JPanel implements KeyListener {
         paintBytes(g);
         g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
         g.setColor(Configuration.COLOR_BACKGROUND);
+        /* Paint Score */
         g.drawString("Score: " + snake.getLength(), 5, 15);
+        /* Paint Special Mode */
+        g.drawString("Special Mode: " + (snake.isSpecialMode() ? "on for " + 
+            snake.getModeCount() + " fields": "off"), 5, height * scale - 6);
+        /* Paint Speed */
+        g.drawString("Speed: " + (int) (1000.0 / snake.getSpeed() * scale) + " px/sec", 
+            width * scale - 135, height * scale - 6);
     }
 
     public void paintBytes(Graphics g) {
@@ -53,7 +60,10 @@ public class GameArea extends JPanel implements KeyListener {
         for (Point p: snake) {
                 g.fillRect(scale * p.getX(), scale * p.getY(), scale, scale);
         }
-        g.setColor(Configuration.COLOR_SNAKE_HEAD);
+        if (snake.isSpecialMode())
+            g.setColor(Configuration.COLOR_BYTE_BLUE);
+        else
+            g.setColor(Configuration.COLOR_SNAKE_HEAD);
         Point p = snake.getHead();
         g.fillRect(scale * p.getX(), scale * p.getY(), scale, scale);
     }

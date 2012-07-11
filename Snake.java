@@ -9,13 +9,18 @@ public class Snake implements Iterable<Point> {
     private GameArea game_area;
     private Bytes bytes;
     private Walls walls;
+    private boolean special_mode;
+    private int count_sm;
+    private int speed;
 
     public Snake(GameArea game_area, Walls walls) {
         this.game_area = game_area;
         this.walls = walls;
 
         body.add(new Point(5, 5));
+        count_sm = 0;
 
+        speed = Configuration.SPEED_START;
         direction = Configuration.DOWN;
         length = Configuration.SNAKE_DEFAULT_LENGTH;
     }
@@ -29,7 +34,20 @@ public class Snake implements Iterable<Point> {
          * letzten Punkt */
         if (isPossible(next_field)) {
             if (bytes.containsByte(next_field)) {
-                changeLength(bytes.getType(next_field));
+                int byte_type = bytes.getType(next_field);
+                if (byte_type == Configuration.BYTE_BLUE) {
+                    count_sm = Configuration.DURATION_SPECIAL_MODE;
+                    special_mode = true;
+                } else if (byte_type == Configuration.BYTE_RED) {
+                    if (isSpecialMode()) {
+                        changeLength(5);
+                    } else {
+                        changeLength(-5);
+                        accelerate(-5);
+                    }
+                } else {
+                    changeLength(1);
+                }
                 if (length < 1)
                     return false;
                 bytes.removeByte(next_field);
@@ -38,6 +56,10 @@ public class Snake implements Iterable<Point> {
             } else {
                 body.add(next_field);
             }
+            if (count_sm > 0)
+                count_sm--;
+            else
+                special_mode = false;
             while (body.size() > length)
                 body.remove(0);
             return true;
@@ -64,8 +86,12 @@ public class Snake implements Iterable<Point> {
         return body.get(body.size() - 1);
     }
 
-    public void changeLength(int type) {
-        length += type;
+    public void changeLength(int change) {
+        length += change;
+    }
+
+    public void accelerate(int change) {
+        speed += change;
     }
 
     public void setBytes(Bytes bytes) {
@@ -76,8 +102,20 @@ public class Snake implements Iterable<Point> {
         return length;
     }
 
+    public int getSpeed() {
+        return speed;
+    }
+
     public boolean containsBody(Point b) {
         return body.contains(b);
+    }
+
+    public boolean isSpecialMode() {
+        return special_mode;
+    }
+
+    public int getModeCount() {
+        return count_sm;
     }
 
     public Iterator<Point> iterator() {

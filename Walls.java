@@ -13,8 +13,8 @@ public class Walls implements Iterable<Point> {
         addWall(new Point(0, Configuration.HEIGHT - 1), new Point(Configuration.WIDTH - 1, Configuration.HEIGHT - 1));
         addWall(new Point(Configuration.WIDTH - 1, 1), new Point(Configuration.WIDTH - 1, Configuration.HEIGHT - 2));
         /* Add custom walls here */
-        addWall(new Point(((Configuration.WIDTH - 1) / 2), 2), 
-                new Point(((Configuration.WIDTH - 1) / 2), Configuration.HEIGHT - 3));  
+        addWall(new Point(((Configuration.WIDTH - 1) / 2), 3), 
+                new Point(((Configuration.WIDTH - 1) / 2), Configuration.HEIGHT - 4));  
     }
 
     public void addWall(Point from, Point to) {
