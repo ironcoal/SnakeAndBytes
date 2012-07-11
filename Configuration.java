@@ -11,7 +11,7 @@ public class Configuration {
 
         BYTE_DEFAULT = 1,
         BYTE_GROW_MORE = 2,
-        BYTE_SHORTEN = -1;
+        BYTE_SHORTEN = -5;
     
     public static final double
         /* byte ocurrency as percentage of all fields */

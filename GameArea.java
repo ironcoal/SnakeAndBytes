@@ -35,6 +35,9 @@ public class GameArea extends JPanel implements KeyListener {
         paintWalls(g);
         paintSnake(g);
         paintBytes(g);
+        g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
+        g.setColor(Configuration.COLOR_BACKGROUND);
+        g.drawString("Score: " + snake.getLength(), 5, 15);
     }
 
     public void paintBytes(Graphics g) {
@@ -91,7 +94,7 @@ public class GameArea extends JPanel implements KeyListener {
     }
 
     public void gameOver() {
-        int choice = JOptionPane.showConfirmDialog(this, "Game Over! Neuer Versuch?",
+        int choice = JOptionPane.showConfirmDialog(this, "Final Score: " + snake.getLength() + "\nNeuer Versuch?",
             "Game Over", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (choice == JOptionPane.YES_OPTION) {
             newGame();

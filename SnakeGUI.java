@@ -14,10 +14,7 @@ public class SnakeGUI extends JFrame implements ActionListener {
         game_area = new GameArea();
 
         add(game_area);
-
-        ScoreDialog sd = new ScoreDialog(this);
-        snake.addObserver(sd);
-
+        
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         pack();
         setVisible(true);

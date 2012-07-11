@@ -26,10 +26,10 @@ public class Bytes implements Iterable<Entry<Point, Integer>> {
     }
 
     private int randType() {
-        int rand = (int) (Math.random() * 10);
-        if (rand > 8)
+        int rand = (int) (Math.random() * 100);
+        if (rand > 80)
             return Configuration.BYTE_GROW_MORE;
-        else if (rand > 2)
+        else if (rand > 20)
             return Configuration.BYTE_DEFAULT;
         else
             return Configuration.BYTE_SHORTEN;
