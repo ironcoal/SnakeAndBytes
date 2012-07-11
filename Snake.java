@@ -19,9 +19,10 @@ public class Snake implements Iterable<Point> {
 
         body.add(new Point(5, 5));
         count_sm = 0;
+        /* substitute for no direction */
+        direction = new Point(0,0);
 
         speed = Configuration.SPEED_START;
-        direction = Configuration.DOWN;
         length = Configuration.SNAKE_DEFAULT_LENGTH;
     }
 

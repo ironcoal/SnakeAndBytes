@@ -15,6 +15,7 @@ public class GameArea extends JPanel implements KeyListener {
     private Walls walls;
     private SnakeMoveThread move_thread;
     private Point last_direction;
+    private boolean start;
 
     public GameArea() {
 
@@ -92,6 +93,11 @@ public class GameArea extends JPanel implements KeyListener {
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             last_direction = Configuration.RIGHT;
         }  
+        if (!start) {
+            move_thread = new SnakeMoveThread(this, snake);
+            start = true;        
+        }
+
     }
 
     public void updateDirection() {
@@ -117,8 +123,7 @@ public class GameArea extends JPanel implements KeyListener {
         snake = new Snake(this, walls);
         bytes = new Bytes(this, snake, walls);
         snake.setBytes(bytes);
-        last_direction = Configuration.DOWN;
-        move_thread = new SnakeMoveThread(this, snake);        
+        start = false;
     }
 
     public int getBoardHeight() {
