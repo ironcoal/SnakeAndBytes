@@ -45,8 +45,17 @@ public class Point {
     }
 
     @Override
-    public boolean equals(Object o) {
-        return this.x == ((Point) o).getX() && this.y == ((Point) o).getY();
+    public boolean equals(Object obj) {
+        if(this == obj)
+            return true;
+        if((obj == null) || (obj.getClass() != this.getClass()))
+             return false;
+        return (this.x == ((Point) obj).getX()) && (this.y == ((Point) obj).getY());
+    }
+
+    @Override
+    public int hashCode() {
+        return x * 10000 + y;
     }
 
     public String toString() {

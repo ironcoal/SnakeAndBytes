@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.util.Map.Entry;
 
 public class GameArea extends JPanel implements KeyListener {
     
@@ -37,9 +38,10 @@ public class GameArea extends JPanel implements KeyListener {
     }
 
     public void paintBytes(Graphics g) {
-        g.setColor(Configuration.COLOR_BYTES);
-        for (Point p: bytes) {
-            g.fillRect(scale * p.getX(), scale * p.getY(), scale, scale);
+        
+        for (Entry<Point, Integer> p: bytes) {
+            g.setColor(bytes.getTypeColor(p.getValue()));
+            g.fillRect(scale * p.getKey().getX(), scale * p.getKey().getY(), scale, scale);
         }
     }
 

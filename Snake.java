@@ -29,16 +29,15 @@ public class Snake implements Iterable<Point> {
          * letzten Punkt */
         if (isPossible(next_field)) {
             if (bytes.containsByte(next_field)) {
-                grow();
+                changeLength(bytes.getType(next_field));
+                if (length < 1)
+                    return false;
                 bytes.removeByte(next_field);
                 body.add(next_field);
                 bytes.addByte();
             } else {
                 body.add(next_field);
             }
-            /* "while", damit spaeter die Schlange mal mehr als 
-             * ein Feld schrumpfen kann 
-             */
             while (body.size() > length)
                 body.remove(0);
             return true;
@@ -65,8 +64,8 @@ public class Snake implements Iterable<Point> {
         return body.get(body.size() - 1);
     }
 
-    public void grow() {
-        length++;
+    public void changeLength(int type) {
+        length += type;
     }
 
     public void setBytes(Bytes bytes) {
@@ -76,7 +75,12 @@ public class Snake implements Iterable<Point> {
     public boolean containsBody(Point b) {
         return body.contains(b);
     }
+
     public Iterator<Point> iterator() {
         return body.iterator();
+    }
+
+    public String toString() {
+        return "Snake: " + body.toString();
     }
 }
