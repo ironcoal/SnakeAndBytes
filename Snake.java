@@ -1,7 +1,9 @@
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Observable;
+import java.util.Observer;
 
-public class Snake implements Iterable<Point> {
+public class Snake extends Observable implements Iterable<Point> {
 
     private int length;
     private ArrayList<Point> body = new ArrayList<Point>();
@@ -66,6 +68,8 @@ public class Snake implements Iterable<Point> {
 
     public void changeLength(int type) {
         length += type;
+        setChanged();
+        notifyObservers();
     }
 
     public void setBytes(Bytes bytes) {

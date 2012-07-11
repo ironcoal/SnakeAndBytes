@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Point {
 
@@ -25,9 +25,9 @@ public class Point {
         return new Point(this.x - point.getX(), this.y - point.getY());
     }
 
-    public ArrayList<Point> lineTo(Point to) {
+    public HashSet<Point> lineTo(Point to) {
         Point difference = to.substract(this);
-        ArrayList<Point> ar_line = new ArrayList<Point>();
+        HashSet<Point> ar_line = new HashSet<Point>();
         
         if (difference.getX() != 0 && difference.getY() != 0) {
             System.out.println("Only straight walls allowed!");

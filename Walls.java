@@ -1,21 +1,24 @@
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 
 public class Walls implements Iterable<Point> {
 
-    private ArrayList<Point> ar_walls = new ArrayList<Point>();
+    private HashSet<Point> ar_walls;
     
     public Walls() {
+        ar_walls = new HashSet<Point>((int) (Configuration.HEIGHT * Configuration.WIDTH * 0.5));
+        /* Default walls for border */
         addWall(new Point(0, 0), new Point(Configuration.WIDTH - 1, 0));
         addWall(new Point(0, 1), new Point(0, Configuration.HEIGHT - 2));
         addWall(new Point(0, Configuration.HEIGHT - 1), new Point(Configuration.WIDTH - 1, Configuration.HEIGHT - 1));
         addWall(new Point(Configuration.WIDTH - 1, 1), new Point(Configuration.WIDTH - 1, Configuration.HEIGHT - 2));
+        /* Add custom walls here */
         addWall(new Point(((Configuration.WIDTH - 1) / 2), 2), 
                 new Point(((Configuration.WIDTH - 1) / 2), Configuration.HEIGHT - 3));  
     }
 
     public void addWall(Point from, Point to) {
-        ArrayList<Point> wall = from.lineTo(to);
+        HashSet<Point> wall = from.lineTo(to);
         if (wall != null)
             ar_walls.addAll(wall);
         else
