@@ -17,7 +17,7 @@ public class GameArea extends JPanel implements KeyListener {
     private Point last_direction;
     private boolean start;
 
-    public GameArea() {
+    public GameArea(int players) {
 
         setPreferredSize(new Dimension(width * scale, height * scale));
         setBackground(Config.COLOR_BACKGROUND);

@@ -11,7 +11,9 @@ public class SnakeGUI extends JFrame implements ActionListener {
     public SnakeGUI() {
         super("Snake & Bytes");
         
-        game_area = new GameArea();
+        /*  Option for choosing number of players */
+
+        game_area = new GameArea(2);
 
         add(game_area);
         
