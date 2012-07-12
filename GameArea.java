@@ -6,8 +6,8 @@ import java.util.Map.Entry;
 
 public class GameArea extends JPanel implements KeyListener {
     
-    private int height = Config.HEIGHT,
-                width = Config.WIDTH,
+    private int height = Config.BOARD_HEIGHT,
+                width = Config.BOARD_WIDTH,
                 scale = Config.SCALE;
 
     private Snake snake;
@@ -62,7 +62,7 @@ public class GameArea extends JPanel implements KeyListener {
                 g.fillRect(scale * p.getX(), scale * p.getY(), scale, scale);
         }
         if (snake.isSpecialMode())
-            g.setColor(Config.COLOR_BYTE_BLUE);
+            g.setColor(Config.COLOR_SNAKE_SPECIAL);
         else
             g.setColor(Config.COLOR_SNAKE_HEAD);
         Point p = snake.getHead();
@@ -110,7 +110,7 @@ public class GameArea extends JPanel implements KeyListener {
     }
 
     public void gameOver() {
-        int choice = JOptionPane.showConfirmDialog(this, "Final Score: " + snake.getLength() + "\nNeuer Versuch?",
+        int choice = JOptionPane.showConfirmDialog(this, "Final Score: " + snake.getLength() + "\nTry again?",
             "Game Over", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         if (choice == JOptionPane.YES_OPTION) {
             newGame();

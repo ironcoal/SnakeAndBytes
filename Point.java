@@ -44,6 +44,11 @@ public class Point {
         return ar_line;
     }
 
+    public static Point randomPoint(int xmax, int ymax) {
+        return new Point((int) (Math.random() * (xmax - 1)), 
+            (int) (Math.random() * (ymax - 1)));
+    }
+
     @Override
     public boolean equals(Object obj) {
         if(this == obj)

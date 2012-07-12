@@ -17,7 +17,13 @@ public class Snake implements Iterable<Point> {
         this.game_area = game_area;
         this.walls = walls;
 
-        body.add(new Point(5, 5));
+        Point rp;
+        do {
+            rp = Point.randomPoint(Config.BOARD_WIDTH, Config.BOARD_HEIGHT);
+        } while (walls.containsWall(rp));
+        
+        body.add(rp);
+
         count_sm = 0;
         /* substitute for no direction */
         direction = new Point(0,0);
