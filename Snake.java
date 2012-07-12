@@ -22,8 +22,8 @@ public class Snake implements Iterable<Point> {
         /* substitute for no direction */
         direction = new Point(0,0);
 
-        speed = Configuration.SPEED_START;
-        length = Configuration.SNAKE_DEFAULT_LENGTH;
+        speed = Config.SPEED_START;
+        length = Config.SNAKE_DEFAULT_LENGTH;
     }
 
     public boolean move() {
@@ -36,15 +36,15 @@ public class Snake implements Iterable<Point> {
         if (isPossible(next_field)) {
             if (bytes.containsByte(next_field)) {
                 int byte_type = bytes.getType(next_field);
-                if (byte_type == Configuration.BYTE_BLUE) {
-                    count_sm = Configuration.DURATION_SPECIAL_MODE;
+                if (byte_type == Config.BYTE_BLUE) {
+                    count_sm += Config.DURATION_SPECIAL_MODE;
                     special_mode = true;
-                } else if (byte_type == Configuration.BYTE_RED) {
+                } else if (byte_type == Config.BYTE_RED) {
                     if (isSpecialMode()) {
                         changeLength(5);
                     } else {
                         changeLength(-5);
-                        accelerate(-5);
+                        accelerate();
                     }
                 } else {
                     changeLength(1);
@@ -91,8 +91,8 @@ public class Snake implements Iterable<Point> {
         length += change;
     }
 
-    public void accelerate(int change) {
-        speed += change;
+    public void accelerate() {
+        speed *= 0.95;
     }
 
     public void setBytes(Bytes bytes) {

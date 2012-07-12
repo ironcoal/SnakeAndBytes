@@ -6,9 +6,9 @@ import java.util.Map.Entry;
 
 public class GameArea extends JPanel implements KeyListener {
     
-    private int height = Configuration.HEIGHT,
-                width = Configuration.WIDTH,
-                scale = Configuration.SCALE;
+    private int height = Config.HEIGHT,
+                width = Config.WIDTH,
+                scale = Config.SCALE;
 
     private Snake snake;
     private Bytes bytes;
@@ -20,7 +20,7 @@ public class GameArea extends JPanel implements KeyListener {
     public GameArea() {
 
         setPreferredSize(new Dimension(width * scale, height * scale));
-        setBackground(Configuration.COLOR_BACKGROUND);
+        setBackground(Config.COLOR_BACKGROUND);
         setDoubleBuffered(true);
         
         walls = new Walls();
@@ -37,7 +37,7 @@ public class GameArea extends JPanel implements KeyListener {
         paintSnake(g);
         paintBytes(g);
         g.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 12));
-        g.setColor(Configuration.COLOR_BACKGROUND);
+        g.setColor(Config.COLOR_BACKGROUND);
         /* Paint Score */
         g.drawString("Score: " + snake.getLength(), 5, 15);
         /* Paint Special Mode */
@@ -57,20 +57,20 @@ public class GameArea extends JPanel implements KeyListener {
     }
 
     public void paintSnake(Graphics g) {
-        g.setColor(Configuration.COLOR_SNAKE_BODY);
+        g.setColor(Config.COLOR_SNAKE_BODY);
         for (Point p: snake) {
                 g.fillRect(scale * p.getX(), scale * p.getY(), scale, scale);
         }
         if (snake.isSpecialMode())
-            g.setColor(Configuration.COLOR_BYTE_BLUE);
+            g.setColor(Config.COLOR_BYTE_BLUE);
         else
-            g.setColor(Configuration.COLOR_SNAKE_HEAD);
+            g.setColor(Config.COLOR_SNAKE_HEAD);
         Point p = snake.getHead();
         g.fillRect(scale * p.getX(), scale * p.getY(), scale, scale);
     }
 
     public void paintWalls(Graphics g) {
-        g.setColor(Configuration.COLOR_WALLS);
+        g.setColor(Config.COLOR_WALLS);
         for (Point p: walls) {
                 g.fillRect(scale * p.getX(), scale * p.getY(), scale, scale);
         }
@@ -81,17 +81,17 @@ public class GameArea extends JPanel implements KeyListener {
     public void keyReleased(KeyEvent e) {}
     
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_UP) {
-            last_direction = Configuration.UP;
+        if (e.getKeyCode() == Config.KEY_UP) {
+            last_direction = Config.UP;
         }
-        if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            last_direction = Configuration.DOWN;
+        if (e.getKeyCode() == Config.KEY_DOWN) {
+            last_direction = Config.DOWN;
         }
-        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            last_direction = Configuration.LEFT;
+        if (e.getKeyCode() == Config.KEY_LEFT) {
+            last_direction = Config.LEFT;
         }
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            last_direction = Configuration.RIGHT;
+        if (e.getKeyCode() == Config.KEY_RIGHT) {
+            last_direction = Config.RIGHT;
         }  
         if (!start) {
             move_thread = new SnakeMoveThread(this, snake);

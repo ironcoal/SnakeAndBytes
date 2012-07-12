@@ -15,7 +15,7 @@ public class Bytes implements Iterable<Entry<Point, Integer>> {
         this.snake = snake;
         this.walls = walls;
         
-        int number = (int) (game_area.getBoardHeight() * game_area.getBoardWidth() * Configuration.OCCURENCY_BYTES);
+        int number = (int) (game_area.getBoardHeight() * game_area.getBoardWidth() * Config.OCCURENCY_BYTES);
         ar_bytes = new HashMap<Point,Integer>((int) number * 4 / 3);
         for (int i = 0; i < number; i++)
             addByte();
@@ -27,21 +27,21 @@ public class Bytes implements Iterable<Entry<Point, Integer>> {
 
     private int randType() {
         int rand = (int) (Math.random() * 100);
-        if (rand > 100 - 100 * Configuration.FREQUENCY_BLUE)
-            return Configuration.BYTE_BLUE;
-        else if (rand > 100 * Configuration.FREQUENCY_RED)
-            return Configuration.BYTE_DEFAULT;
+        if (rand > 100 - 100 * Config.FREQUENCY_BLUE)
+            return Config.BYTE_BLUE;
+        else if (rand > 100 * Config.FREQUENCY_RED)
+            return Config.BYTE_DEFAULT;
         else
-            return Configuration.BYTE_RED;
+            return Config.BYTE_RED;
     }
 
     public Color getTypeColor(int type) {
-        if (type == Configuration.BYTE_BLUE)
-            return Configuration.COLOR_BYTE_BLUE;
-        if (type == Configuration.BYTE_RED)
-            return Configuration.COLOR_BYTE_RED;
+        if (type == Config.BYTE_BLUE)
+            return Config.COLOR_BYTE_BLUE;
+        if (type == Config.BYTE_RED)
+            return Config.COLOR_BYTE_RED;
         else
-            return Configuration.COLOR_BYTE_DEFAULT;
+            return Config.COLOR_BYTE_DEFAULT;
     }
 
     public void removeByte(Point b) {
