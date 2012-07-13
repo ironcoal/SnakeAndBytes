@@ -13,10 +13,11 @@ public class SnakeGUI extends JFrame implements ActionListener {
         
         /*  Option for choosing number of players */
 
-        game_area = new GameArea(2);
+        game_area = new GameArea(1);
 
         add(game_area);
-        
+
+        setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         pack();
         setVisible(true);

@@ -12,6 +12,7 @@ public class Snake implements Iterable<Point> {
     private boolean special_mode;
     private int count_sm;
     private int speed;
+    private Snake[] snakes;
 
     public Snake(GameArea game_area, Walls walls) {
         this.game_area = game_area;
@@ -79,7 +80,11 @@ public class Snake implements Iterable<Point> {
     public boolean isPossible(Point point) {
         /* Befindet sich der uebergebene Punkt ausserhalb
         *  des Spielfelds oder auf dem snake-body? */
-        return (game_area.isIn(point) && !body.contains(point) && !walls.containsWall(point));
+        boolean contains = false;
+        for (Snake s: snakes)
+            if (s.containsBody(point))
+                contains = true;
+        return (game_area.isIn(point) && !contains && !walls.containsWall(point));
     }
 
     public void setDirection(Point new_direction) {
@@ -111,6 +116,10 @@ public class Snake implements Iterable<Point> {
 
     public int getSpeed() {
         return speed;
+    }
+
+    public void linkSnakes(Snake[] snakes) {
+        this.snakes = snakes;
     }
 
     public boolean containsBody(Point b) {

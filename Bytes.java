@@ -7,12 +7,12 @@ public class Bytes implements Iterable<Entry<Point, Integer>> {
 
     private HashMap<Point,Integer> ar_bytes;
     private GameArea game_area;
-    private Snake snake;
+    private Snake[] snakes;
     private Walls walls;
 
-    public Bytes(GameArea game_area, Snake snake, Walls walls) {
+    public Bytes(GameArea game_area, Snake[] snakes, Walls walls) {
         this.game_area = game_area;
-        this.snake = snake;
+        this.snakes = snakes;
         this.walls = walls;
         
         int occ = (int) (Config.BOARD_WIDTH * Config.BOARD_HEIGHT * Config.OCCURENCY_BYTES);
@@ -59,9 +59,16 @@ public class Bytes implements Iterable<Entry<Point, Integer>> {
     private Point randByte() {
         Point rp;
         /* Get random Point in GameArea and return, if it's not on snake-body */
+        boolean free; 
         do {
+            free = false;
             rp = Point.randomPoint(Config.BOARD_WIDTH, Config.BOARD_HEIGHT);
-        } while (snake.containsBody(rp) || containsByte(rp) || walls.containsWall(rp));
+
+            for (int i = 0; i < snakes.length; i++) {
+                if (snakes[i].containsBody(rp))
+                    free = true;
+            }
+        } while (free || containsByte(rp) || walls.containsWall(rp));
         return rp;
     }
 
